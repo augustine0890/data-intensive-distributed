@@ -26,4 +26,6 @@
 - Add/Remove servers as needed
 - Commodity hardware instead of specialized servers
 
-Customer --> Internet, DNS, CDN --> Load Balancer --> Front-End Servers --> Backend Servers (Cache Servers, Message Queue Servers) <--> Database, Batch job, Search Servers
+Customer --> Internet, DNS, CDN --> Load Balancer --> Front-End Servers --> Backend Servers (Cache Servers, Message Queue Servers) <--> Database, Batch job, Search Servers.
+
+<img src="distributed-system-overview.png">
