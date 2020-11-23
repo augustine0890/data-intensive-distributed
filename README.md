@@ -1,1 +1,1 @@
-# scala-akka-spark
+# data-intensive-distributed
