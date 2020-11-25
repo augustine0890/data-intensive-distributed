@@ -1,8 +1,11 @@
 #### Create enviroment
-- `python3 -m venv env-simple`
+- `python3 -m venv env`
 
 **Active**
-- `source env-simple/bin/activate`
+- `source env/bin/activate`
+
+**Deactivae**
+- `deactivate`
 
 **Update pip**
 - `pip install --upgrade pip`
