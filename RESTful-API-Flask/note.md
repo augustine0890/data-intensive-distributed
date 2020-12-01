@@ -23,6 +23,7 @@
 **Install Flask**
 - `pip install flask`
 - `pip install Flask-SQLAlchemy`
+- `pip install flask-marshmallow`
 
 #### App structure
 - `pip freeze > requirements.txt`
@@ -67,3 +68,5 @@
 - Supports multiple database platforms
 
 **ORM Model Classes**
+- DB Browser for SQLite
+    - `brew cask install db-browser-for-sqlite`
