@@ -70,3 +70,10 @@
 **ORM Model Classes**
 - DB Browser for SQLite
     - `brew cask install db-browser-for-sqlite`
+
+**JSON Web Tokens (JWTs)**
+- `pip install Flask-Login`
+- `pip install Flask-User`
+- `pip install flask-jwt-extended`
+- `pip install Flask-Mail`
+- Go to: `https://mailtrap.io`
