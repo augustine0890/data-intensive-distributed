@@ -35,3 +35,11 @@ years of historical records of check deposits.
 **Databases**
 - An organized collection of information and easily accessed.
 - Most contain multiple tables, which may each include several different fields.
+
+**Hadoop**
+- Storing data and process large datasets (gigabytes to petabytes)
+- __HDFS__ (Hadoop Distributed File System): highly fault-tolerant, deployed on
+low-cost hardware.
+- __MapReduce__: process vast amounts of data in-parallel on large clusters
+    - MapReduce job usually splits the input dat-set into independent chunks which are processed by the map tasks in a completely parallel manner
+- Hive (Dat Warehouse): providing data query and analysis (SQL-like interface)
