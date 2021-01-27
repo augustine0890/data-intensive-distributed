@@ -49,3 +49,137 @@
     ```json
     DELETE /vehicles/_doc/123
     ```
+
+## Components of Index
+- Example
+    ```json
+    PUT /business/_doc/110
+    {
+      "address": "57 New Dover Ln",
+      "floors": 10,
+      "offices": 21,
+      "loc": {
+        "lat": 40.707519,
+        "lon": -74.008560
+      }
+    }
+
+    PUT /employees/_doc/330
+    {
+      "name": "Richard Bell",
+      "title": "Senior Accountant",
+      "salary_usd": 115000.00,
+      "hiredate": "Jan 19, 2015"
+    }
+    ```
+
+## Distributed Execution of Requests
+- Each Elasticsearch index is divided into shards. Shards are both logical and physical division of an index.
+- Each Elasticsearch shard is a Lucene index
+- The Lucene index is divided into smaller files called segments. A segment is a small Lucene index. Lucene searches in all segments sequentially.
+- When you add new documents into your Elasticsearch index, Lucene creates a new segment and writies it.
+- From time to time, Lucene merges smaller segments into a larger one. the merge can also be triggered manually from the Elasticsearch API.
+
+Reference: [Operating Elasticsearch](https://fdv.github.io/running-elasticsearch-fun-profit/)
+
+## Text Analysis for Indexing and Searching
+- `ES --> Indexing <--> Analyzer (Tokenizer, Filter) --> Inverted Index --> Shards`
+
+## Index Settings and Mappings
+- `PUT /<target>/_settings`
+    ```json
+    PUT /customers/_settings
+    {
+      "index": {
+        "routing.allocation.total_shards_per_node": 2,
+        "number_of_replicas": 1
+      }
+    }
+    ```
+- `PUT /<target>/_mapping`
+    ```json
+    PUT /customers/_mapping
+    {
+        "properties": {
+            "online": {
+                "properties": {
+                    "gender": {
+                        "type": "text",
+                        "analyzer": "standard"
+                    },
+                    "age": {
+                        "type": "integer"
+                    },
+                    "total_spent": {
+                        "type": "float"
+                    },
+                    "is_new": {
+                        "type": "boolean"
+                    },
+                    "name": {
+                        "type": "text",
+                        "analyzer": "standard"
+                    }
+                }
+            }
+        }
+    }
+    ```
+    ```json
+    PUT /customers/_doc/124
+    {
+      "name": "Mary Cranford",
+      "address": "310 Clark Ave",
+      "gender": "female",
+      "age": 34,
+      "total_spent": 550.75,
+      "is_new": false
+    }
+    ```
+- Create an index with settings and mapping
+    
+    ```json
+    PUT /customers
+    {
+      "settings": {
+        "number_of_replicas": 1,
+        "number_of_shards": 2,
+        "analysis": {},
+        "refresh_interval": "1s"
+      },
+      "mappings": {
+        "dynamic": false,
+        "properties": {
+          "online": {
+            "properties": {
+              "gender": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "age": {
+                "type": "integer"
+              },
+              "total_spent": {
+                "type": "float"
+              },
+              "is_new": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "text",
+                "analyzer": "standard"
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+- The analyzer
+    ```json
+    GET /_analyze
+    {
+      "analyzer" : "standard", // english
+      "text" : "Quick Brown Foxes!"
+    }
+    ```
