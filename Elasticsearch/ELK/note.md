@@ -299,3 +299,140 @@ Reference: [Operating Elasticsearch](https://fdv.github.io/running-elasticsearch
       }
     }
     ```
+- Filter
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "bool": {
+          "filter": [
+            {"term": {"name": "accounting"}}
+          ],
+          "must": [
+            {"match": {"professor.name": "bill"}},
+            {"range": {"students_enrolled": {
+                "gte": 17}
+            }}
+          ],
+          "must_not": [
+            {"match": {"room": "e7"}}
+          ]
+        }
+      }
+    }
+    ```
+- Aggregations DSL
+
+    ```json
+    GET /vehicles/_search
+    {
+      "size": 5, 
+      "query": {
+        "match_all": {}
+      },
+      "sort": [
+        {
+          "price": {
+            "order": "desc"
+          }
+        }
+      ]
+    }
+    ```
+    ```json
+    GET /vehicles/_search
+    {
+      "size": 0,
+      "query": {
+        "match": {
+          "color": "red"
+        }
+      }, 
+      "aggs": {
+        "popular_cars": {
+          "terms": {
+            "field": "make.keyword"
+          },
+          "aggs": {
+            "avg_price": {
+              "avg": {
+                "field": "price"
+              }
+            },
+            "max_price": {
+              "max": {
+                "field": "price"
+              }
+            },
+            "min_price": {
+              "min": {
+                "field": "price"
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+    ```json
+    GET /vehicles/_search
+    {
+      "size": 0,
+      "aggs": {
+        "popular_cars": {
+          "terms": {
+            "field": "make.keyword"
+          },
+          "aggs": {
+            "stats_on_price": {
+              "stats": {
+                "field": "price"
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+    ```json
+    GET /vehicles/_search
+    {
+      "size": 0,
+      "aggs": {
+        "car_conditions": {
+          "terms": {
+            "field": "condition.keyword"
+          },
+          "aggs": {
+            "sold_date_ranges": {
+              "range": {
+                "field": "sold",
+                "ranges": [
+                  {"from": "2015-01-01",
+                    "to": "2015-01-12"
+                  },
+                  {"from": "2016-01-01",
+                    "to": "2017-01-12"
+                  }
+                ]
+              },
+              
+              "aggs": {
+                "stats_price": {
+                  "stats": {
+                    "field": "price"
+                  }
+                },
+                "make": {
+                  "terms": {
+                    "field": "make.keyword",
+                    "size": 10
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
