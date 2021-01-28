@@ -183,3 +183,119 @@ Reference: [Operating Elasticsearch](https://fdv.github.io/running-elasticsearch
       "text" : "Quick Brown Foxes!"
     }
     ```
+
+## Domain Specific Language (DSL)
+- Search DSL components:
+    - Query Context
+    - Filter Context
+
+- Example
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "match": {
+          "name": "computer"
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "exists": {
+          "field": "professor.email" // "email"
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "bool": {
+          "must": [
+            {"match": {"name": "computer"}},
+            {"match": {"room": "c8"}}
+          ]
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "bool": {
+          "must": [
+            {"match": {"name": "accounting"}},
+            {"match": {"room": "e3"}}
+          ],
+          "must_not": [
+            {"match": {"professor.name": "bill"}}
+          ],
+          "should": [
+            {"match": {"name": "computer"}}
+          ],
+          "minimum_should_match": 1
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "multi_match": {
+          "fields": ["name", "professor.department"],
+          "query": "accounting"
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "match_phrase_prefix": {
+          "course_description": "build a transaction led"
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "range": {
+          "students_enrolled": {
+            "gte": 19,
+            "lte": 20
+          }
+        }
+      }
+    }
+    ```
+    ```json
+    GET /courses/_search
+    {
+      "query": {
+        "bool": {
+          "must": [
+            {"match": {"name": "accounting"}}
+          ],
+          "must_not": [
+            {"match": {"room": "e7"}}
+          ],
+          "should": [
+            {"range": {
+              "course_publish_date": {
+                "gte": "2014-05-15"
+              }
+            }}
+          ]
+        }
+      }
+    }
+    ```
