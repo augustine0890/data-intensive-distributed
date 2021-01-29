@@ -461,3 +461,27 @@ Reference: [Operating Elasticsearch](https://fdv.github.io/running-elasticsearch
   ```
   - `bin/logstash -f logstash-simple.conf`
   - Logstash Configuration [Examples](https://www.elastic.co/guide/en/logstash/current/config-examples.html)
+
+## Kibana Visualizations and Dashboards
+- Kibana is a data visualization dashboard for Elasticsearch.
+- Check count of indicies
+  - `http://localhost:9200/logstash-*/_count`
+- Elastic stack
+  - [ELK](https://www.elastic.co/what-is/elk-stack) stack
+- __Beats__ is a single-purpose data shippers. They send data from hundreds or thousands of machines and systems to Logstash or Elasticsearch.
+  - Install FileBeat
+    ```
+    - curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.10.2-darwin-x86_64.tar.gz
+    - tar xzvf filebeat-7.10.2-darwin-x86_64.tar.gz
+    ```
+- Start Logstash
+  ```
+  cd logstash-7.10.2
+  bin/logstash -f /Users/augustine/Documents/Code/data-intensive-distributed/Elasticsearch/ELK/data/apache.conf
+  ```
+  - `sudo bin/logstash -f /Users/augustine/Documents/Code/data-intensive-distributed/Elasticsearch/ELK/data/logstash-cars.conf`
+- Start Filebeat
+  ```
+  cd filebeat-7.10.2
+  ./filebeat
+  ```
