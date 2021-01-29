@@ -436,3 +436,28 @@ Reference: [Operating Elasticsearch](https://fdv.github.io/running-elasticsearch
       }
     }
     ```
+
+## Download and Configure Logstash
+- Here the [guide](https://www.elastic.co/downloads/logstash)
+- Check Java version
+  - `java -version`
+
+**Stashing Your First Event**
+- A Logstash pipeline has two required elements, `input` and `output`, and one optional element, `filter`. The input plugins consume data from a source, the filter plugins modify the data as you specify, and the output plugins write the data to a destination.
+- To test your Logstash installation
+  ```bash
+  cd logstash-7.10.2
+  bin/logstash -e 'input { stdin {}} output { stdout {}}'
+  ```
+- Configuring Logstash
+  - Use `-f` to specify config file
+  ```text
+  logstash-simple.conf
+  input { stdin { } }
+  output {
+    elasticsearch { hosts => ["localhost:9200"] }
+    stdout { codec => rubydebug }
+  }
+  ```
+  - `bin/logstash -f logstash-simple.conf`
+  - Logstash Configuration [Examples](https://www.elastic.co/guide/en/logstash/current/config-examples.html)
