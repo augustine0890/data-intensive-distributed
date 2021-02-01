@@ -22,3 +22,16 @@
     - `bin/kafka-topics.sh --list --zookeeper localhost:2181`
 - Describe detail the topic
     - `bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic <topic-name>`
+
+## Consume and Produce Messages
+- Producer: connect to broker
+    - `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <topic-name>`
+- Consumer
+    - `bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic-name>`
+    - `bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic <topic-name> --from-beginning`
+- Kafka cluster stores messages even if they were already consumed by one of the consumers. Same messages may be read muiltiple times by different consumers.
+- Multiple consumers and multiple producers could exchange messages via single centralized storage point - kafka cluster.
+- Producers send messages to the Kafka cluster.
+- Consumers receive messages form the Kafka cluster.
+- Every message inside of the topic has unique number called `offset`. First message in each topic has offset 0.
+- Consumners start reading messages starting from specific offset.
