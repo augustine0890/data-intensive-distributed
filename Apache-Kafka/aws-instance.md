@@ -48,10 +48,39 @@
     --broker-list localhost:9092 \
     --topic animals
     ```
-- Start console consumer and read messages
+- Start console consumer and read messages (FROM PARTITION 1)
     ```bash
     sudo docker exec kafka_kafka1_1 kafka-console-consumer \
     --bootstrap-server localhost:9092 \
+    --partition 1 \
     --topic animals \
     --from-beginning
+    ```
+- Start console consumer and read messages (STARTING FROM OFFSET)
+    ```bash
+    sudo docker exec kafka_kafka1_1 kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --partition 1 \
+    --topic animals \
+    --offset 0
+    ```
+- It's not possible to read from specific offset across entire topic. You must specify partition along with offset.
+- List Topics
+    ```bash
+    sudo docker exec kafka_kafka1_1 kafka-topics \
+    --bootstrap-server localhost:9092 \
+    --list
+    ```
+- Describe Topic
+    ```bash
+    sudo docker exec kafka_kafka1_1 kafka-topics \
+    --bootstrap-server localhost:9092 \
+    --describe \
+    --topic animals
+    ```
+    ```bash
+    sudo docker exec kafka_kafka1_1 kafka-topics \
+    --bootstrap-server localhost:9092 \
+    --describe \
+    --topic __consumer_offsets
     ```
