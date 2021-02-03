@@ -86,6 +86,7 @@
     --topic __consumer_offsets
     ```
 ### Kafka Cluster with Multiple Brokers
+- [Example](https://medium.com/better-programming/your-local-event-driven-environment-using-dockerised-kafka-cluster-6e84af09cd95) and [here](https://medium.com/better-programming/kafka-docker-run-multiple-kafka-brokers-and-zookeeper-services-in-docker-3ab287056fd5)
 - Run docker
     - `sudo docker-compose -f single-zk-multi-kafka.yml up`
 - Run the zookeeper CLI
@@ -95,6 +96,7 @@
         - `ls /brokers/topics` #Gives the list of topics
         - `get /brokers/ids/1` #Gives more detail information of the brokder id '1'
     - `echo dump | nc localhost 2181 | grep brokers`
+----
 - Create a topic named `months`:
     ```bash
     sudo docker exec -t kafka_kafka1_1 kafka-topics \
@@ -117,3 +119,62 @@
     --topic cars \
     --from-beginning
     ```
+---
+- Get into the `kafka` container
+    - `sudo docker exec -it kafka bash`
+- Create a topic named `months`
+    ```bash
+    kafka-topics \
+    --create
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --replication-factor 3 \
+    --partitions 5 \
+    --topic months
+    ```
+- Check the topic
+    ```bash
+    kafka-topics \
+    --list \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094
+    ```
+- Check topic detail
+    ```bash
+    kafka-topics \
+    --describe \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --topic months
+    ```
+- Send messages to topic
+    ```bash
+    kafka-console-producer \
+    --broker-list localhost:9092,localhost:9093,localhost:9094 \
+    --topic months \
+    --property "parse.key=true" \
+    --property "key.separator=:"
+    ```
+- Consume Messages from topic
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --topic months \
+    --from-beginning \
+    --property "parse.key=true"
+    ```
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --topic months \
+    --partition 0 \
+    --from-beginning
+    ```
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --topic months \
+    --partition 0 \
+    --offset 1
+    ```
+- Stop down broker
+    - `sudo docker stop kafka-broker2_1`
+- Start broker
+    - `sudo docker start kafka-broker2_1`
