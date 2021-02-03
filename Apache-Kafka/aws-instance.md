@@ -14,7 +14,8 @@
     - `sudo systemctl enable docker`
 - Check Docker version
     - `docker --version`
-
+- Remove all images
+    - `sudo docker rmi $(sudo docker images -a -q)`
 ## Kafka docker-compose
 - Default `DOCKER_HOST_IP=127.0.0.1`
 - Single Zookeeper/Kafka
@@ -83,4 +84,36 @@
     --bootstrap-server localhost:9092 \
     --describe \
     --topic __consumer_offsets
+    ```
+### Kafka Cluster with Multiple Brokers
+- Run docker
+    - `sudo docker-compose -f single-zk-multi-kafka.yml up`
+- Run the zookeeper CLI
+    - `bin/zkCli.sh -server localhost:2181` #Make sure Brokers are running
+    - From here can explore
+        - `ls /brokers/ids` #Gives the list of active brokers
+        - `ls /brokers/topics` #Gives the list of topics
+        - `get /brokers/ids/1` #Gives more detail information of the brokder id '1'
+    - `echo dump | nc localhost 2181 | grep brokers`
+- Create a topic named `months`:
+    ```bash
+    sudo docker exec -t kafka_kafka1_1 kafka-topics \
+    --bootstrap-server :9092 \
+    --create \
+    --replication-factor 3 \
+    --partitions 7 \
+    --topic months
+    ```
+- Start producer
+    ```bash
+    sudo docker exec -it kafka_kafka1_1 kafka-console-producer \
+    --broker-list localhost:9092 \
+    --topic cars
+    ```
+- Start consumer
+    ```bash
+    sudo docker exec kafka_kafka1_1 kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic cars \
+    --from-beginning
     ```
