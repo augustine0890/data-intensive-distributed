@@ -320,3 +320,12 @@
     --topic perf \
     --messages 1000000
     ```
+
+### Kafka with Python
+- Install `pip`
+    - `sudo apt install python3-pip`
+    - `pip3 --version`
+- Install 'kafka-python`
+    - `pip3 install kafka-python`
+- Install `Faker`
+    - `pip3 install Faker`
