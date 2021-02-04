@@ -247,3 +247,76 @@
     --group nums \
     --describe
     ```
+
+### Performance Testing
+- Start docker
+    -  `sudo docker-compose -f single-zk-multi-kafka.yml up`
+- Get into the `kafka` container
+    - `sudo docker exec -it kafka bash`
+- Create a topic named `numbers`
+    ```bash
+    kafka-topics \
+    --create \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --replication-factor 3 \
+    --partitions 100 \
+    --topic perf
+    ```
+    ```bash
+    kafka-topics \
+    --create \
+    --bootstrap-server localhost:9092,localhost:9093,localhost:9094 \
+    --replication-factor 3 \
+    --partitions 3 \
+    --topic perf2
+    ```
+
+- Start console consumer
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic perf
+    ```
+- Start console consumer with specific consumer group
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic perf2 \
+    --group perf \
+    --from-beginning
+    ```
+
+- Producer performance test
+    - Send 1000 messages, 100 messages/second, and each message is 1kb.
+    ```bash
+    kafka-producer-perf-test \
+    --topic perf \
+    --num-records 1000 \
+    --throughput 100 \
+    --record-size 1000 \
+    --producer-props \
+    bootstrap.servers=localhost:9092
+    ```
+    ```bash
+    kafka-producer-perf-test \
+    --topic perf2 \
+    --num-records 1000 \
+    --throughput 10 \
+    --record-size 100000 \
+    --producer-props \
+    bootstrap.servers=localhost:9092
+    ```
+- Consumer group details
+    ```bash
+    kafka-consumer-groups \
+    --bootstrap-server localhost:9092 \
+    --group perf \
+    --describe
+    ```
+- Consumer performance test
+    ```bash
+    kafka-consumer-perf-test \
+    --broker-list localhost:9092 \
+    --topic perf \
+    --messages 1000000
+    ```
