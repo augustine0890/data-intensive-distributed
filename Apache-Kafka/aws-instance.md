@@ -178,3 +178,72 @@
     - `sudo docker stop kafka-broker2_1`
 - Start broker
     - `sudo docker start kafka-broker2_1`
+
+### Kafka Consumer Groups
+- Start docker
+    -  `sudo docker-compose -f single-zk-kafka.yml up`
+- Get into the `kafka` container
+    - `sudo docker exec -it kafka bash`
+- Create a topic named `numbers`
+    ```bash
+    kafka-topics \
+    --create \
+    --bootstrap-server localhost:9092 \
+    --replication-factor 1 \
+    --partitions 5 \
+    --topic numbers
+    ```
+- List the topic
+    ```bash
+    kafka-topics \
+    --list \
+    --bootstrap-server localhost:9092
+    ```
+- Check topic detail
+    ```bash
+    kafka-topics \
+    --describe \
+    --bootstrap-server localhost:9092 \
+    --topic numbers
+    ```
+- Start console producer
+    ```bash
+    kafka-console-producer \
+    --broker-list localhost:9092 \
+    --topic numbers
+    ```
+- Start console consumer
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic numbers \
+    --from-beginning
+    ```
+- Start console consumer from specific partition
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic numbers \
+    --partition 4 \
+    --from-beginning
+    ```
+- Start console consumer with specific consumer group
+    ```bash
+    kafka-console-consumer \
+    --bootstrap-server localhost:9092 \
+    --topic numbers \
+    --group nums \
+    --from-beginning
+- List consumer group
+    ```bash
+    kafka-consumer-groups \
+    --bootstrap-server localhost:9092 \
+    --list
+    ```
+- Consumer group details
+    ```bash
+    kafka-consumer-groups \
+    --bootstrap-server localhost:9092 \
+    --group nums \
+    --describe
+    ```
