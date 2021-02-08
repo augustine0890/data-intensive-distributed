@@ -28,7 +28,7 @@
     - If key=null, data is sent round robin (broker 101 then 102 and then 103 ...)
 - Consumers
     - Read data from a topic (identified by name)
-    - Comsumers know which broker to read from
+    - Consumers know which broker to read from
     - In case of broker failures, consumers know how to recover
     - Data is read in order within each partitions
 - Consumer Groups
@@ -62,7 +62,7 @@
     - Messages are appended to a topic-partition in the order they are sent
     - Consumers read messages in the order stored in a topic-partition
     - With a replication factor of N, producers and consumers can tolerate up to N-1 brokers being down
-    - Example replication factore of 3
+    - Example replication factor of 3
         - Allows for one broker to be taken down for maintenance
-        - Allows for another broker to be taken down unexectedly
-    - As long as the number of partitions remains constant for a topic (no new partitions), the same key will alwasy go to the same partition
+        - Allows for another broker to be taken down unexpectedly
+    - As long as the number of partitions remains constant for a topic (no new partitions), the same key will always go to the same partition
