@@ -34,3 +34,27 @@
 - Don't use the root account except for AWS account setup
 - Use Access Keys for Programmatic Access (CLI/SDK)
 - Audit: IAM credential reports & IAM access advisor
+
+### EC2 - Elastic Compute & Instance Storage
+- Elastic Compute Cloud = Infrastructure as a Service
+    - Renting virtual machine
+    - Storing data on virtual drives (EBS)
+    - Distributing load across machines (ELB)
+    - Scaling the services using an auto-scaling group (ASG)
+- EC2 Intance Types
+    - General purpose: balance between compute, memory, networking
+    - Compute Optimized: batch processing workloads, high performance computing
+    - Memory Optimized: fast performance for workloads that process large data sets in memory
+    - Storage Optimized: storage-intensive tasks that require high, sequential read and write access to large data sets on local storage
+- Security Groups
+    - Acting as a `firewall` on EC2 instances
+    - Access to Ports
+    - Authorised IP ranges - IPv4 and IPv6
+    - Control of inbound network (from other to the instance)
+    - Control of outboud network (from the instance to other)
+- Classic Ports
+    - SSH (secure shell): 22 - log into a Linux instance
+    - FTP (file transport protocol): 21 - upload files into a file share
+    - SFTP (secure file transport protocol): 22 - upload file using SSH
+    - HTTP: 80 - access unsecured website
+    - HTTPs: 443 - access secured website
