@@ -24,3 +24,13 @@
     - WAF (Web Application Firewall)
 - Region-scoped:
     - Amazon EC2, Elastic Beanstalk, Lambda, Rekognition
+
+### IAM - Identity and Access Management
+- Users are people within your organization, and can be grouped
+- Groups contains users only.
+- The policies define the permissions of the users, groups or roles's permissions
+- Assign permissions to AWS services with IAM Roles
+    - Common roles: EC2 instance, Lambda function, CloudFormation
+- Don't use the root account except for AWS account setup
+- Use Access Keys for Programmatic Access (CLI/SDK)
+- Audit: IAM credential reports & IAM access advisor

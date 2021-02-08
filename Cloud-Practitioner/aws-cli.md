@@ -2,6 +2,7 @@
 - For the latest version
     - `curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"`
     - `sudo installer -pkg AWSCLIV2.pkg -target /`
+    - `aws --version`
 - Configuration
     ```bash
     aws configure
@@ -12,6 +13,8 @@
     ```
 - List configuration data
     -  `aws configure list`
+- List all of users
+    - `aws iam list-users`
 - Command structure
     - `aws <command> <subcommand> [options and parameters]`
 
