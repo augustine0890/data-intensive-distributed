@@ -1,4 +1,4 @@
-# Cloud Practitioneer
+# Cloud Practitioner
 
 ### IT Terminology
 - Router: a networking device that forwards data packets between computer networks. They know where to send your packets on the internet.
@@ -58,3 +58,17 @@
     - SFTP (secure file transport protocol): 22 - upload file using SSH
     - HTTP: 80 - access unsecured website
     - HTTPs: 443 - access secured website
+
+### VPC & Networking
+- VPC - Virtual Private Cloud: private network to deploy the resources (regional resource)
+- Subnets allow you to partition your network inside the VPC (Availability Zone resource)
+- A public subnet is a subnet that is accessible from the internet
+- A private subnet is a subnet that is not accessible from the internet
+- VPC Diagram
+
+    ```
+    AWS Cloud --> Region --> VPC = (Availability Zone 1: public and private subnet, VPC CIDR Range, Availability Zone 2: public and private subnet)
+    ```
+- Internet Gateways helps VPC instances connect with the internet.
+- Public Subnets have a route to the internet gateway.
+- NAT Gateways (AWS-managed) & NAT Instances (self-managed) allow your instances in the Private Subnets to access the internet while remaining private
