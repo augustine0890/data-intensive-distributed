@@ -19,3 +19,12 @@
     - `aws <command> <subcommand> [options and parameters]`
 
 [Reference](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
+
+# AWS Cloud Development Kit (AWS CDK)
+- Bootstrapping is the deployment of a AWS CloudFormation template to a specific AWS enviroment (account and region)
+- Use the `cdk bootstrap`
+    - `cdk bootstrap aws://ACCOUNT-NUMBER-1/REGION-1 aws://ACCOUNT-NUMBER-2/REGION-2 ...`
+    ```
+    cdk bootstrap aws://123456789012/us-east-1
+    cdk bootstrap 123456789012/us-east-1 123456789012/us-west-1
+    ```

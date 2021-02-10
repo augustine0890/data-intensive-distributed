@@ -59,6 +59,26 @@
     - HTTP: 80 - access unsecured website
     - HTTPs: 443 - access secured website
 
+### S3
+- "infinitely scaling" storage
+- Backup and storage, disaster recovery, application hosting, data lakes & big data analytics, static website.
+- Amazon S3 allows people to store objects (file) in "buckets" (directories)
+- Buckets must have a globally unique name (across all regions all accounts)
+- Object (file):
+    - Have a Key
+    - The Key is the FULL path
+    - The Key is composed of _prefix_ + _object name_
+    - The Key with very long names that contain slashes (`/`)
+
+### Deploying and Managing Infrastructure at Scale Section
+- CloudFormation: declarative way of outlining your AWS Infrastructure.
+- CloudFormation template:
+    - Want a security group
+    - Two EC2 instances using this security group
+    - Want an S3 bucket
+    - Want a load balancer (ELB) in front of these machines
+- CloudFormation will created in the right order, with the exact configuration that you specify
+
 ### VPC & Networking
 - VPC - Virtual Private Cloud: private network to deploy the resources (regional resource)
 - Subnets allow you to partition your network inside the VPC (Availability Zone resource)
