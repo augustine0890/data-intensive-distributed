@@ -58,7 +58,18 @@
     - SFTP (secure file transport protocol): 22 - upload file using SSH
     - HTTP: 80 - access unsecured website
     - HTTPs: 443 - access secured website
-
+- SSH
+    - It allows you to control a remote machine, using command line
+    - `ssh -i "key.pem" ec2-user@ec2-54-167-189-204.compute-1.amazonaws.com`
+- An Amazon EC2 Dedicated Host is a physical server with EC2 instance capacity fully dedicated to your use.
+ - Shared Responsibility Model for EC2
+    - AMZ: infrastructure (global network security), isolation on physical hosts, replacing faulty hardware, compliance validation.
+    - User: security groups rules, operating-system patches and updates, software and utilities installed on the EC2 instance, IAM roles assigned to EC2 & IAM user assess management.
+- EC2 Instance: AMI (OS) + Instance Size (CPU + RAM) + Storage + Security Groups + EC2 User Data
+    - Security Groups: firewall attached to the EC2 instance
+    - EC2 User Data: script launched at the first start of an instance
+    - SSH: start a terminal into EC2 instance (port 22)
+    - EC2 Instance Role: link to IAM roles
 ### S3
 - "infinitely scaling" storage
 - Backup and storage, disaster recovery, application hosting, data lakes & big data analytics, static website.
