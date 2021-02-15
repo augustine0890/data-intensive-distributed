@@ -70,6 +70,36 @@
     - EC2 User Data: script launched at the first start of an instance
     - SSH: start a terminal into EC2 instance (port 22)
     - EC2 Instance Role: link to IAM roles
+### EC2 Instance Storage
+- An EBS (Elastic Block Store) Volume is a network drive you can attach to your instances while they are running
+- It allows your instances to persist data, even after their termination
+- EBS Volume
+    - Network drive (not physical drive)
+    - Network to communicate the instance (bit of latency)
+    - Locked to an Availability Zone
+- EBS Snapshots
+    - Make a backup (snapshot) of your EBS volume at a point in time
+    - Can copy snapshots across AZ or Region
+- AMI: Amazon Machine Image
+    - Customization of an EC2 instance
+    - Own software, configuration, operating system, monitoring...
+    - Faster boot/configuration time because all the software is pre-packaged
+    - AMI is built for a specific region (can be copy across regions)
+- EC2 Image Builder
+    - Automate the creation of Virtual Machines or container images (creation, maintain, validate and test EC2 AMIs)
+    - Can be run on a schedule (weekly etc...)
+    ```bash
+    EC2 Image Builder -> create -> Builder EC2 Intance -> create -> New AMI -> Test EC2 Intance -> AMI is distributed (can be multiple regions)
+    ```
+- EC2 Instance Store
+    - EBS volumes are network drives with good but "limited" performance
+    - Need a high-performance hardware disk, use EC2 Instance Store
+    - Better I/O performance
+    - Lost if the instance is stopped/terminated
+- EFS: Elastic File System
+    - Managed NFS (network file system) that can be mounted on 100s of EC2
+    - Highly available, scalable, expensive, pay per use
+
 ### S3
 - "infinitely scaling" storage
 - Backup and storage, disaster recovery, application hosting, data lakes & big data analytics, static website.
