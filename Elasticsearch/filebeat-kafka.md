@@ -47,7 +47,9 @@
         - `/opt/kafka_2.12-2.4.0/bin/kafka-console-producer.sh --broker-list $kafka_brokers --topic topic`
 - Create the Kafka consumer session:
     - Connect to the Kafka client EC2 instance
-        - `kafka_client_dns=`aws ec2 describe-instances --filter file://filebeat-kafka/kafka/kafka_filter.json --output text --query "Reservations[*].Instances[*].{Instance:PublicDnsName}[0].Instance"` && echo $kafka_client_dns`
+        ```bash
+        kafka_client_dns=`aws ec2 describe-instances --filter file://filebeat-kafka/kafka/kafka_filter.json --output text --query "Reservations[*].Instances[*].{Instance:PublicDnsName}[0].Instance"` && echo $kafka_client_dns
+        ```
         - `ssh -i "~/.ssh/key_pairs.pem" ec2-user@$kafka_client_dns`
     - Get the cluster ARN
         - `kafka_arn=`aws kafka list-clusters --output text --query 'ClusterInfoList[*].ClusterArn'` && echo $kafka_arn`
@@ -56,3 +58,17 @@
     - Connect to the cluster as a consumer
         - `/opt/kafka_2.12-2.4.0/bin/kafka-console-consumer.sh --bootstrap-server $kafka_brokers --topic topic --from-beginning`
 
+## Filebeat
+- Filebeat will be installed on EC2 instance.
+- Create EC2
+    - `cdk deploy filebeat`
+- Connect to the Filebeat EC2 instance
+    ```bash
+    # get the Filebeat ec2 instance public dns
+    filebeat_dns=`aws ec2 describe-instances --filter file://filebeat-kafka/filebeat/filebeat_filter.json --output text --query "Reservations[*].Instances[*].{Instance:PublicDnsName}"` && echo $filebeat_dns
+    # use the public dns to connect to the filebeat ec2 instance
+    ssh -i "~/.ssh/key_pairs.pem" ec2-user@$filebeat_dns
+    ```
+- Generate dummy apache logs with log generator
+    - `./log_generator.py`
+- The `apachelog` folder will be incluced log generator. Filebeat will harvest the logs and publish them to the MSK Cluster.
